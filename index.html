@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسارات الأمن السيبراني | Cyber Tracks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg:        #0a0d14;
+    --surface:   #10151f;
+    --card:      #141a27;
+    --border:    #1e2a3a;
+    --accent:    #00d4ff;
+    --accent2:   #7c3aed;
+    --green:     #22d3a5;
+    --red:       #f04444;
+    --yellow:    #f5c542;
+    --text:      #cdd6f4;
+    --muted:     #6b7a99;
+    --font:      'IBM Plex Sans Arabic', system-ui, sans-serif;
+    --mono:      'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 60px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .logo span { color: var(--accent2); }
+
+  nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: center;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  #search-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    outline: none;
+    width: 200px;
+    transition: border-color .2s;
+    flex-shrink: 0;
+  }
+  #search-box:focus { border-color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 .hl { 
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p { color: var(--muted); max-width: 600px; margin: 0 auto; }
+
+  .badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .badge {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .badge.off { color: var(--red); border-color: var(--red); background: rgba(240,68,68,.08); }
+  .badge.def { color: var(--green); border-color: var(--green); background: rgba(34,211,165,.08); }
+  .badge.neu { color: var(--yellow); border-color: var(--yellow); background: rgba(245,197,66,.08); }
+
+  /* ── DASHBOARD ── */
+  .section { max-width: 1280px; margin: 0 auto; padding: 40px 24px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .dash-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .dash-card h4 {
+    font-size: 11px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .dash-card h4.off { color: var(--red); }
+  .dash-card h4.def { color: var(--green); }
+  .dash-card h4.prog { color: var(--accent2); }
+  .dash-card h4.net { color: var(--accent); }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+    font-size: 12px;
+  }
+  .bar-label { width: 110px; flex-shrink: 0; color: var(--text); }
+  .bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width .8s ease; }
+
+  /* ── TRACK GRID ── */
+  .tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 18px;
+  }
+
+  .track-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s;
+  }
+  .track-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .track-card.hidden { display: none; }
+
+  .track-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .track-icon {
+    font-size: 1.6rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .track-meta { flex: 1; }
+  .track-name { font-weight: 600; font-size: 1rem; color: #fff; }
+  .track-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 3px;
+  }
+
+  .chevron {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform .3s;
+    flex-shrink: 0;
+  }
+  .track-card.open .chevron { transform: rotate(180deg); }
+
+  .track-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .track-card.open .track-body { display: block; }
+
+  /* ── ACCORDION BODY ── */
+  .sub-section { margin-top: 16px; }
+  .sub-section h4 {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  ul.items {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  ul.items li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .importance-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .imp-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  .imp-chip .stars { color: var(--yellow); }
+
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .pros, .cons {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .pros { border-right: 3px solid var(--green); }
+  .cons { border-right: 3px solid var(--red); }
+  .pros h5 { color: var(--green); margin-bottom: 6px; font-size: 11px; }
+  .cons h5 { color: var(--red); margin-bottom: 6px; font-size: 11px; }
+  .pros li, .cons li { margin-bottom: 3px; color: var(--text); }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 8px;
+  }
+  .rm-step {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .rm-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    text-align: center;
+    color: var(--text);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rm-node.start { border-color: var(--accent); color: var(--accent); }
+  .rm-node.end { border-color: var(--accent2); color: var(--accent2); }
+  .rm-arrow {
+    color: var(--muted);
+    font-size: 14px;
+    flex-shrink: 0;
+    padding: 0 4px;
+  }
+
+  p.overview {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  .certs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .cert-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: rgba(124,58,237,.12);
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .who-box {
+    background: rgba(0,212,255,.05);
+    border: 1px solid rgba(0,212,255,.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 4px;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrapper { overflow-x: auto; margin-top: 10px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 700px;
+  }
+  th {
+    background: var(--surface);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+  tr:hover td { background: var(--surface); }
+  .t-track { font-weight: 600; color: #fff; }
+  .t-type { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+  .t-stars { color: var(--yellow); letter-spacing: -1px; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 30px 24px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .pros-cons { grid-template-columns: 1fr; }
+    .tracks-grid { grid-template-columns: 1fr; }
+    #search-box { width: 150px; }
+    .rm-step { flex: 1 1 45%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="logo">[ <span>CyberTracks</span>.ar ]</div>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#tracks">المسارات</a>
+      <a href="#compare">مقارنة</a>
+    </nav>
+    <input type="text" id="search-box" placeholder="🔍 ابحث عن مسار..." onkeyup="filterTracks(this.value)">
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<div class="hero">
+  <div class="hero-eyebrow">دليلك لـ Cybersecurity</div>
+  <h1>اختار <span class="hl">مسارك الصح</span><br>في الأمن السيبراني</h1>
+  <p>شرح مبسّط لأشهر 12 مسار — مهامهم، أدواتهم، شهاداتهم، وخارطة طريقك من الأساسيات لأول وظيفة.</p>
+  <div class="badges">
+    <span class="badge off">⚔️ Offensive Tracks</span>
+    <span class="badge def">🛡️ Defensive Tracks</span>
+    <span class="badge neu">⚙️ Engineering Tracks</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ DASHBOARD ═══════════════════════════════ -->
+<div class="section" id="dashboard">
+  <div class="section-title">📊 Dashboard</div>
+  <div class="dash-grid">
+
+    <!-- Offensive -->
+    <div class="dash-card">
+      <h4 class="off">⚔️ Offensive Tracks</h4>
+      <div class="bar-row"><span class="bar-label">Red Team</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--red)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Pen Tester</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--red)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Bug Bounty</span><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--red)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Malware Analysis</span><div class="bar-track"><div class="bar-fill" style="width:60%;background:var(--red)"></div></div></div>
+    </div>
+
+    <!-- Defensive -->
+    <div class="dash-card">
+      <h4 class="def">🛡️ Defensive Tracks</h4>
+      <div class="bar-row"><span class="bar-label">SOC Analyst</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--green)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Blue Team</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--green)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Incident Response</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--green)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Digital Forensics</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--green)"></div></div></div>
+    </div>
+
+    <!-- Most Programming-Heavy -->
+    <div class="dash-card">
+      <h4 class="prog">💻 أكتر مسارات Coding</h4>
+      <div class="bar-row"><span class="bar-label">AppSec</span><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--accent2)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">DevSecOps</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--accent2)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Malware Analysis</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--accent2)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Red Team</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--accent2)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Cloud Security</span><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--accent2)"></div></div></div>
+    </div>
+
+    <!-- Most Networking-Heavy -->
+    <div class="dash-card">
+      <h4 class="net">🌐 أكتر مسارات Networking</h4>
+      <div class="bar-row"><span class="bar-label">Network Security</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">SOC Analyst</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--accent)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Pen Tester</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--accent)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Red Team</span><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--accent)"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Cloud Security</span><div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--accent)"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TRACKS ═══════════════════════════════ -->
+<div class="section" id="tracks">
+  <div class="section-title">🔐 المسارات (12 Track)</div>
+  <div class="tracks-grid" id="tracks-container">
+
+    <!-- ─────── SOC Analyst ─────── -->
+    <div class="track-card" data-name="soc analyst محلل">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(34,211,165,.1)">🖥️</div>
+        <div class="track-meta">
+          <div class="track-name">SOC Analyst</div>
+          <span class="track-tag" style="background:rgba(34,211,165,.1);color:var(--green)">🛡️ Defensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">إنت شايل المسؤولية إنك تراقب الـ Network والـ Systems على مدار الساعة وتكتشف أي هجوم أو نشاط غريب. ده أكتر مسار entry-level وظائف فيه.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>مراقبة SIEM alerts</li><li>تريا التقارير الأمنية</li><li>تحليل Logs</li><li>Triage للحوادث</li><li>كتابة Incident Reports</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>شبكات TCP/IP</li><li>Linux & Windows</li><li>SIEM (Splunk/QRadar)</li><li>Threat Intelligence</li><li>تحليل Logs</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★☆☆☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Splunk</li><li>IBM QRadar</li><li>Wireshark</li><li>TheHive</li><li>VirusTotal</li><li>MISP</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">CompTIA Security+</span><span class="cert-chip">CompTIA CySA+</span><span class="cert-chip">SC-200</span><span class="cert-chip">BTL1</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>وظائف كتير جداً</li><li>نقطة دخول سهلة</li><li>مرتبات كويسة</li><li>بيعلمك كل حاجة</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>Shifts على مدار الساعة</li><li>Alert fatigue ممكن يأثر عليك</li><li>Repetitive أحياناً</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">لو بتحب تراقب وتحلل وعايز تدخل الـ Cybersecurity بسرعة — ده مسارك.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Networking + OS</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Splunk + SIEM</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">TryHackMe SOC Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Security+ / BTL1</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">SOC Analyst L1</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Threat Hunter / IR</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Blue Team ─────── -->
+    <div class="track-card" data-name="blue team دفاع">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(0,212,255,.1)">🔵</div>
+        <div class="track-meta">
+          <div class="track-name">Blue Team</div>
+          <span class="track-tag" style="background:rgba(0,212,255,.1);color:var(--accent)">🛡️ Defensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">إنت بتحمي الـ Infrastructure من الهجمات — بتعمل Hardening، تراقب، وترد على الهجمات. أوسع من SOC لأنه بيشمل البنية التحتية كلها.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>System Hardening</li><li>إدارة Firewall & IDS/IPS</li><li>Vulnerability Management</li><li>Security Policies</li><li>Incident Handling</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Network Protocols</li><li>Active Directory</li><li>Endpoint Security</li><li>SIEM</li><li>Scripting (Python/PowerShell)</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Snort/Suricata</li><li>Wazuh</li><li>Velociraptor</li><li>CrowdStrike</li><li>Nessus</li><li>Sysmon</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">CompTIA Security+</span><span class="cert-chip">GCIA</span><span class="cert-chip">GCIH</span><span class="cert-chip">CySA+</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>طلب عالي في السوق</li><li>متنوع ومش رتيب</li><li>مهارات قابلة للنقل</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>ضغط كبير وقت الحوادث</li><li>محتاج تعرف كتير جداً</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي بيحب يدافع ويفكر زي المهاجم عشان يحمي أحسن — ده مسارك.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Networking + Linux</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Active Directory</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Blue Team Labs Online</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Security+ / GCIA</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Security Engineer</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">SOC Manager / Architect</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Red Team ─────── -->
+    <div class="track-card" data-name="red team هجوم">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(240,68,68,.1)">🔴</div>
+        <div class="track-meta">
+          <div class="track-name">Red Team</div>
+          <span class="track-tag" style="background:rgba(240,68,68,.1);color:var(--red)">⚔️ Offensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتمثل دور المهاجم الحقيقي — بتعمل هجمات متكاملة على المؤسسة عشان تكشف نقاط ضعفها قبل المهاجمين الحقيقيين. أصعب وأعلى مرتباً من Pen Testing.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Advanced Phishing Campaigns</li><li>Physical Intrusion Tests</li><li>C2 Infrastructure Setup</div><li>Lateral Movement</li><li>تقارير شاملة</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Advanced Exploitation</li><li>Active Directory Attacks</li><li>Custom Malware Dev</li><li>OPSEC</li><li>Social Engineering</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Cobalt Strike</li><li>Metasploit</li><li>Mimikatz</li><li>BloodHound</li><li>Sliver C2</li><li>Havoc</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">CRTO</span><span class="cert-chip">CRTE</span><span class="cert-chip">OSCP</span><span class="cert-chip">PNPT</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>مرتبات ممتازة جداً</li><li>شغل تحدي ومثير</li><li>Prestige عالي</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>يحتاج خبرة سنين</li><li>مش entry-level أبداً</li><li>Stressful جداً</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي عنده خبرة كافية في Pen Testing وعايز يوصل للمستوى المتقدم جداً في الهجوم.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Networking + Programming</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Pen Testing Basics</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">HackTheBox + AD Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">OSCP / CRTO</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Junior Red Teamer</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Red Team Lead</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Penetration Tester ─────── -->
+    <div class="track-card" data-name="penetration tester pentest اختبار اختراق">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(240,68,68,.08)">💉</div>
+        <div class="track-meta">
+          <div class="track-name">Penetration Tester</div>
+          <span class="track-tag" style="background:rgba(240,68,68,.1);color:var(--red)">⚔️ Offensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتعمل اختبارات اختراق رسمية وبإذن عشان تكشف الثغرات. أكتر مسار مشهور في الـ Offensive وفيه فرص وظيفية ضخمة في Egypt وglobally.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Network Pen Testing</li><li>Web App Testing</li><li>Reconnaissance</li><li>Exploitation</li><li>كتابة تقارير احترافية</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Networking Protocols</li><li>Web Vulnerabilities (OWASP)</li><li>Linux/Windows Admin</li><li>Python/Bash Scripting</li><li>Burp Suite</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Kali Linux</li><li>Metasploit</li><li>Burp Suite</li><li>Nmap</li><li>Nessus</li><li>SQLmap</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">eJPT</span><span class="cert-chip">PNPT</span><span class="cert-chip">OSCP</span><span class="cert-chip">CEH</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>مرتبات عالية</li><li>شغل ممتع دايماً</li><li>Freelance ممكن</li><li>طلب عالمي</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>تقارير كتير ومملة</li><li>محتاج تعلم مستمر</li><li>أحياناً Scope محدود</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي بيحب يفكر زي المهاجم ويلاقي الثغرات بطريقة منظمة ومرخصة.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Networking + Linux</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">TryHackMe / HTB</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Vulnerable VMs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">eJPT → OSCP</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Junior Pen Tester</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Senior / Red Teamer</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Bug Bounty ─────── -->
+    <div class="track-card" data-name="bug bounty مكافآت ثغرات">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(245,197,66,.1)">🐛</div>
+        <div class="track-meta">
+          <div class="track-name">Bug Bounty Hunter</div>
+          <span class="track-tag" style="background:rgba(240,68,68,.1);color:var(--red)">⚔️ Offensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتدور على ثغرات في برامج شركات زي Google وMeta وAmazon مقابل مكافآت مالية. ممكن تكسب آلاف الدولارات من ثغرة واحدة. أكتر مسار Freelance.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Recon على الـ Targets</li><li>اختبار Web/API</li><li>ثغرات OWASP Top 10</li><li>كتابة Bug Reports</li><li>متابعة برامج HackerOne/Bugcrowd</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Web Hacking</li><li>API Security</li><li>JavaScript</li><li>Burp Suite Advanced</li><li>Recon Techniques</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★☆☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Burp Suite Pro</li><li>Amass</li><li>Subfinder</li><li>Nuclei</li><li>ffuf</li><li>SQLmap</li></ul></div>
+        <div class="sub-section"><h4>المنصات</h4><div class="certs-list"><span class="cert-chip">HackerOne</span><span class="cert-chip">Bugcrowd</span><span class="cert-chip">Intigriti</span><span class="cert-chip">YesWeHack</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>حرية تامة</li><li>دخل غير محدود</li><li>من البيت</li><li>بتتعلم تقنيات حديثة</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>دخل غير منتظم</li><li>منافسة شديدة</li><li>ممكن تمشي أسابيع بدون نتيجة</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي بيحب العمل الحر وصبور ومستعد يقضي ساعات في Recon بدون ضمانات.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Web Basics + HTTP</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">OWASP Top 10</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">PortSwigger Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Private Programs أولاً</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">أول Bounty 🎉</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Hall of Fame</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Digital Forensics ─────── -->
+    <div class="track-card" data-name="digital forensics جنائي رقمي تحقيق">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(124,58,237,.1)">🔍</div>
+        <div class="track-meta">
+          <div class="track-name">Digital Forensics</div>
+          <span class="track-tag" style="background:rgba(34,211,165,.1);color:var(--green)">🛡️ Defensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتحقق في الجرائم الإلكترونية وتستخرج الأدلة الرقمية من الأجهزة والشبكات. بتشتغل مع الجهات القانونية والشركات بعد وقوع الحادثة.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Disk Imaging</li><li>Memory Analysis</li><li>Log Analysis</li><li>Timeline Reconstruction</li><li>كتابة تقارير قانونية</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>File Systems (NTFS/ext4)</li><li>Memory Forensics</li><li>Network Forensics</li><li>Chain of Custody</li><li>Python/Scripting</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Autopsy</li><li>Volatility</li><li>FTK Imager</li><li>Wireshark</li><li>Sleuth Kit</li><li>X-Ways</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">GCFE</span><span class="cert-chip">GCFA</span><span class="cert-chip">EnCE</span><span class="cert-chip">CHFI</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>شغل محقق حقيقي</li><li>طلب من الحكومات</li><li>مرتبات ممتازة</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>محتوى صعب أحياناً</li><li>مسؤولية قانونية</li><li>وظائف أقل من SOC</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي عنده تفكير تحليلي وبيحب يحل الألغاز ويحقق في الجرائم الرقمية.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">OS Internals</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Autopsy + Volatility</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">CTF Forensics</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">GCFE / CHFI</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Junior Forensics Analyst</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">DFIR Lead</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Incident Response ─────── -->
+    <div class="track-card" data-name="incident response استجابة للحوادث">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(245,197,66,.1)">🚨</div>
+        <div class="track-meta">
+          <div class="track-name">Incident Response</div>
+          <span class="track-tag" style="background:rgba(34,211,165,.1);color:var(--green)">🛡️ Defensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">لما يحصل هجوم، إنت اللي بيتصلوا فيه. بتيجي تحتوي الهجوم وتقضي عليه وترجع الأنظمة. ضغط عالي لكن مؤثر جداً.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Triage الحوادث</li><li>Containment</li><li>Eradication</li><li>Recovery</li><li>Post-Incident Reports</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Threat Analysis</li><li>Malware Basics</li><li>Network Forensics</li><li>Scripting</li><li>Crisis Management</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>TheHive</li><li>Velociraptor</li><li>Splunk</li><li>CarbonBlack</li><li>Cortex XSOAR</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">GCIH</span><span class="cert-chip">ECIH</span><span class="cert-chip">GCIA</span><span class="cert-chip">BTL2</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>Critical Role</li><li>مرتبات ممتازة</li><li>كل يوم تحدي جديد</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>On-call على مدار الساعة</li><li>ضغط نفسي شديد</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي بيحب التحدي تحت الضغط وعنده مهارة اتخاذ القرار السريع.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">SOC Experience</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Forensics Basics</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">IR Labs + Simulations</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">GCIH / ECIH</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">IR Analyst</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">IR Manager / CISO</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Malware Analysis ─────── -->
+    <div class="track-card" data-name="malware analysis تحليل برامج خبيثة فيروسات">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(240,68,68,.08)">🦠</div>
+        <div class="track-meta">
+          <div class="track-name">Malware Analysis</div>
+          <span class="track-tag" style="background:rgba(240,68,68,.1);color:var(--red)">⚔️ Hybrid</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتحلل البرامج الخبيثة — Viruses وRansomware وTrojans — عشان تفهم شغلها وتبني دفاعات ضدها. يحتاج programming قوي جداً.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Static Analysis</li><li>Dynamic Analysis</li><li>Reverse Engineering</li><li>YARA Rules كتابة</li><li>Threat Reports</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Assembly Language</li><li>Reverse Engineering</li><li>C / C++ / Python</li><li>OS Internals</li><li>Sandbox Environments</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★☆☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★★</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>IDA Pro</li><li>Ghidra</li><li>x64dbg</li><li>Cuckoo Sandbox</li><li>ANY.RUN</li><li>PE Studio</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">GREM</span><span class="cert-chip">CRMA</span><span class="cert-chip">eCMAP</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>Niche عالي الطلب</li><li>مرتبات ممتازة جداً</li><li>Threat Intel قوي</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>Learning curve صعبة جداً</li><li>وظائف أقل</li><li>يحتاج سنين تعلم</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي عنده خلفية Programming قوية وبيحب يفكك البرامج ويفهم جواها.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">C + Assembly + OS</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">RE Basics (Ghidra)</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">ANY.RUN + Sandbox</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">GREM / eCMAP</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Malware Analyst</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Threat Researcher</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Cloud Security ─────── -->
+    <div class="track-card" data-name="cloud security امن سحابة aws azure">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(0,212,255,.08)">☁️</div>
+        <div class="track-meta">
+          <div class="track-name">Cloud Security</div>
+          <span class="track-tag" style="background:rgba(245,197,66,.1);color:var(--yellow)">⚙️ Engineering</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتأمن البيئات السحابية على AWS وAzure وGCP. من أسرع المسارات نمواً في السوق وفيه طلب ضخم وخصوصاً خارج مصر.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>IAM Configuration</li><li>Cloud Compliance</li><li>Security Groups & Policies</li><li>CSPM Tools</li><li>Cloud Incident Response</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>AWS/Azure/GCP</li><li>IAM & Permissions</li><li>Terraform / IaC</li><li>Python / Bash</li><li>Kubernetes Security</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★☆☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Prowler</li><li>ScoutSuite</li><li>CloudTrail</li><li>AWS Security Hub</li><li>Lacework</li><li>Prisma Cloud</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">AWS Security Specialty</span><span class="cert-chip">AZ-500</span><span class="cert-chip">CCSP</span><span class="cert-chip">GWEB</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>أعلى مرتبات في السوق</li><li>Remote Jobs كتير</li><li>نمو هائل</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>محتاج Cloud basics أولاً</li><li>Cloud vendors بيتغيروا بسرعة</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي عنده خلفية DevOps أو System Admin وعايز يتخصص في Security.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Linux + Networking</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">AWS/Azure Basics</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">flaws.cloud Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">AZ-500 / AWS Sec</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Cloud Security Engineer</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Cloud Architect</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── AppSec ─────── -->
+    <div class="track-card" data-name="appsec application security امن تطبيقات">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(124,58,237,.1)">🔒</div>
+        <div class="track-meta">
+          <div class="track-name">AppSec (Application Security)</div>
+          <span class="track-tag" style="background:rgba(245,197,66,.1);color:var(--yellow)">⚙️ Engineering</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتأمن التطبيقات من الداخل — بتراجع الكود وتعمل Threat Modeling وبتدرب الـ Developers. مثالي لو عندك خلفية Development.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Code Review</li><li>SAST/DAST Scans</li><li>Threat Modeling</li><li>Security Training للـ Devs</li><li>API Security Review</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Multiple Programming Languages</li><li>OWASP Top 10</li><li>Secure Coding</li><li>SDLC Security</li><li>API Security</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★☆☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★☆☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>SonarQube</li><li>Checkmarx</li><li>Burp Suite</li><li>Semgrep</li><li>OWASP ZAP</li><li>Snyk</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">GWEB</span><span class="cert-chip">CSSLP</span><span class="cert-chip">CASE</span><span class="cert-chip">eWPT</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>مرتبات عالية جداً</li><li>Respect عالي من Devs</li><li>Future-proof مسار</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>محتاج خبرة Dev أولاً</li><li>صعب تشرح القيمة للإدارة</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">الـ Developer اللي بيحب Security — ده أحسن مسار له ومرتباته من أعلى المرتبات.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Dev Background</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">OWASP + Web Hacking</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">PortSwigger + Code Audit</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">GWEB / eWPT</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">AppSec Engineer</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Product Security Lead</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── DevSecOps ─────── -->
+    <div class="track-card" data-name="devsecops devops امن pipeline">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(34,211,165,.08)">⚙️</div>
+        <div class="track-meta">
+          <div class="track-name">DevSecOps</div>
+          <span class="track-tag" style="background:rgba(245,197,66,.1);color:var(--yellow)">⚙️ Engineering</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتدخل الـ Security جوا الـ CI/CD Pipeline عشان الـ Code المتنزل يكون آمن من أول يوم. فيه intersection بين Dev وOps وSecurity.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Pipeline Security</li><li>IaC Scanning</li><li>Container Security</li><li>Secret Management</li><li>Compliance Automation</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>Docker & Kubernetes</li><li>CI/CD (Jenkins/GitHub Actions)</li><li>Python / Bash</li><li>Terraform</li><li>Cloud Platforms</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★☆☆</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★★☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Trivy</li><li>Snyk</li><li>HashiCorp Vault</li><li>Falco</li><li>Checkov</li><li>SonarQube</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">CKS</span><span class="cert-chip">CDP</span><span class="cert-chip">DCSA</span><span class="cert-chip">AWS DevSecOps</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>من أعلى المرتبات</li><li>Remote Jobs وفيرة</li><li>مسار مستقبلي جداً</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>يحتاج خلفية DevOps قوية</li><li>Tool ecosystem ضخم</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">الـ DevOps Engineer اللي عايز يضيف Security أو الـ Developer المهتم بـ Automation.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">Linux + Docker + Git</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">CI/CD + Kubernetes</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Security Scanning Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">CKS / Snyk Training</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">DevSecOps Engineer</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Platform Security Lead</div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ─────── Network Security ─────── -->
+    <div class="track-card" data-name="network security امن شبكات">
+      <div class="track-header" onclick="toggle(this)">
+        <div class="track-icon" style="background:rgba(0,212,255,.08)">🌐</div>
+        <div class="track-meta">
+          <div class="track-name">Network Security</div>
+          <span class="track-tag" style="background:rgba(34,211,165,.1);color:var(--green)">🛡️ Defensive</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="track-body">
+        <p class="overview">بتأمن البنية التحتية للشبكة — Firewalls وRouters وVPN وIDS/IPS. الأساس اللي بتقوم عليه معظم وظائف الـ Security.</p>
+        <div class="sub-section"><h4>المهام اليومية</h4><ul class="items"><li>Firewall Rules Management</li><li>VPN Configuration</li><li>Network Monitoring</li><li>Traffic Analysis</li><li>IDS/IPS Tuning</li></ul></div>
+        <div class="sub-section"><h4>المهارات المطلوبة</h4><ul class="items"><li>TCP/IP Deep Dive</li><li>Routing & Switching</li><li>Firewall (Palo Alto/Cisco)</li><li>VPN Technologies</li><li>Packet Analysis</li></ul></div>
+        <div class="sub-section"><h4>مستوى الأهمية</h4><div class="importance-row">
+          <div class="imp-chip">🌐 Networking <span class="stars">★★★★★</span></div>
+          <div class="imp-chip">💻 Programming <span class="stars">★★☆☆☆</span></div>
+          <div class="imp-chip">🖥️ OS <span class="stars">★★★☆☆</span></div>
+        </div></div>
+        <div class="sub-section"><h4>الأدوات</h4><ul class="items"><li>Wireshark</li><li>Palo Alto NGFW</li><li>Cisco ASA</li><li>pfSense</li><li>Zeek</li><li>NetFlow Analyzers</li></ul></div>
+        <div class="sub-section"><h4>الشهادات</h4><div class="certs-list"><span class="cert-chip">CCNA Security</span><span class="cert-chip">CCNP Security</span><span class="cert-chip">CompTIA Network+</span><span class="cert-chip">PCNSE</span></div></div>
+        <div class="sub-section"><h4>إيجابيات وسلبيات</h4><div class="pros-cons">
+          <div class="pros"><h5>✅ إيجابيات</h5><ul><li>أساس قوي لكل المسارات</li><li>وظائف كتير جداً</li><li>مطلوب في كل شركة</li></ul></div>
+          <div class="cons"><h5>❌ سلبيات</h5><ul><li>يمكن يبقى ممل روتيني</li><li>Hardware intensive</li></ul></div>
+        </div></div>
+        <div class="sub-section"><h4>مين يختاره؟</h4><div class="who-box">اللي بيحب الشبكات وعنده خلفية Network Engineering ويريد يضيف Security.</div></div>
+        <div class="sub-section"><h4>Roadmap</h4><div class="roadmap">
+          <div class="rm-step"><div class="rm-node start">CCNA / Network+</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Wireshark + Firewall</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">GNS3/Packet Tracer Labs</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">CCNP Security / PCNSE</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node">Network Security Eng.</div><div class="rm-arrow">←</div></div>
+          <div class="rm-step"><div class="rm-node end">Security Architect</div></div>
+        </div></div>
+      </div>
+    </div>
+
+  </div><!-- /tracks-grid -->
+</div>
+
+<!-- ═══════════════════════════════ COMPARISON TABLE ═══════════════════════════════ -->
+<div class="section" id="compare">
+  <div class="section-title">📋 مقارنة المسارات</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>المسار</th>
+          <th>النوع</th>
+          <th>🌐 Networking</th>
+          <th>💻 Programming</th>
+          <th>🖥️ OS</th>
+          <th>سهولة الدخول</th>
+          <th>المرتب (نسبي)</th>
+          <th>Remote Work</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="t-track">SOC Analyst</td><td><span class="t-type" style="background:rgba(34,211,165,.1);color:var(--green)">Defensive</span></td><td class="t-stars">★★★★★</td><td class="t-stars">★★☆☆☆</td><td class="t-stars">★★★★☆</td><td class="t-stars" style="color:var(--green)">★★★★★</td><td class="t-stars">★★★☆☆</td><td>✅ نعم</td></tr>
+        <tr><td class="t-track">Blue Team</td><td><span class="t-type" style="background:rgba(34,211,165,.1);color:var(--green)">Defensive</span></td><td class="t-stars">★★★★★</td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--green)">★★★★☆</td><td class="t-stars">★★★★☆</td><td>⚠️ أحياناً</td></tr>
+        <tr><td class="t-track">Red Team</td><td><span class="t-type" style="background:rgba(240,68,68,.1);color:var(--red)">Offensive</span></td><td class="t-stars">★★★★☆</td><td class="t-stars">★★★★★</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--red)">★☆☆☆☆</td><td class="t-stars">★★★★★</td><td>✅ نعم</td></tr>
+        <tr><td class="t-track">Pen Tester</td><td><span class="t-type" style="background:rgba(240,68,68,.1);color:var(--red)">Offensive</span></td><td class="t-stars">★★★★★</td><td class="t-stars">★★★★☆</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★☆</td><td>✅ نعم</td></tr>
+        <tr><td class="t-track">Bug Bounty</td><td><span class="t-type" style="background:rgba(240,68,68,.1);color:var(--red)">Offensive</span></td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★☆</td><td class="t-stars">★★★☆☆</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★★</td><td>✅ 100%</td></tr>
+        <tr><td class="t-track">Digital Forensics</td><td><span class="t-type" style="background:rgba(34,211,165,.1);color:var(--green)">Defensive</span></td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★☆</td><td>⚠️ نادراً</td></tr>
+        <tr><td class="t-track">Incident Response</td><td><span class="t-type" style="background:rgba(34,211,165,.1);color:var(--green)">Defensive</span></td><td class="t-stars">★★★★☆</td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★☆</td><td>⚠️ أحياناً</td></tr>
+        <tr><td class="t-track">Malware Analysis</td><td><span class="t-type" style="background:rgba(240,68,68,.1);color:var(--red)">Hybrid</span></td><td class="t-stars">★★☆☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars">★★★★★</td><td class="t-stars" style="color:var(--red)">★★☆☆☆</td><td class="t-stars">★★★★★</td><td>✅ نعم</td></tr>
+        <tr><td class="t-track">Cloud Security</td><td><span class="t-type" style="background:rgba(245,197,66,.1);color:var(--yellow)">Engineering</span></td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★☆</td><td class="t-stars">★★★☆☆</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★★</td><td>✅ 100%</td></tr>
+        <tr><td class="t-track">AppSec</td><td><span class="t-type" style="background:rgba(245,197,66,.1);color:var(--yellow)">Engineering</span></td><td class="t-stars">★★☆☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars">★★★☆☆</td><td class="t-stars" style="color:var(--yellow)">★★★☆☆</td><td class="t-stars">★★★★★</td><td>✅ نعم</td></tr>
+        <tr><td class="t-track">DevSecOps</td><td><span class="t-type" style="background:rgba(245,197,66,.1);color:var(--yellow)">Engineering</span></td><td class="t-stars">★★★☆☆</td><td class="t-stars">★★★★★</td><td class="t-stars">★★★★☆</td><td class="t-stars" style="color:var(--red)">★★☆☆☆</td><td class="t-stars">★★★★★</td><td>✅ 100%</td></tr>
+        <tr><td class="t-track">Network Security</td><td><span class="t-type" style="background:rgba(34,211,165,.1);color:var(--green)">Defensive</span></td><td class="t-stars">★★★★★</td><td class="t-stars">★★☆☆☆</td><td class="t-stars">★★★☆☆</td><td class="t-stars" style="color:var(--green)">★★★★★</td><td class="t-stars">★★★☆☆</td><td>❌ نادر</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  [ CyberTracks.ar ] — دليل مسارات الأمن السيبراني بالعامية المصرية &nbsp;|&nbsp; 2024
+</footer>
+
+<!-- ═══════════════════════════════ SCRIPTS ═══════════════════════════════ -->
+<script>
+  function toggle(header) {
+    const card = header.closest('.track-card');
+    card.classList.toggle('open');
+  }
+
+  function filterTracks(query) {
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll('.track-card').forEach(card => {
+      const name = card.getAttribute('data-name') || '';
+      card.classList.toggle('hidden', q.length > 0 && !name.includes(q));
+    });
+  }
+
+  // Open first card by default
+  document.querySelector('.track-card .track-header').click();
+</script>
+</body>
+</html>
